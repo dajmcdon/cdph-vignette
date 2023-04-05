@@ -1,0 +1,14 @@
+Package: cdphvignette
+Title: Large vignette for CDPH
+Version: 0.0.0.9999
+Authors@R: c(
+    person("Logan", "Brooks", role = c("cre","aut"),
+    person("Daniel", "McDonald", role = "aut"),
+    person("Ryan", "Tibshirani", , "ryantibs@cmu.edu", role = "aut"))
+Description: Bookdown vignette for CDPH
+License: CC BY 4.0
+Imports:
+    covidcast,
+    epidatr,
+    epipredict,
+    epiprocess

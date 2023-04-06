@@ -6,7 +6,7 @@ demonstrations-of-sliding-ar-and-arx-forecasters
 comparing-different-forecasting-engines
 example-using-cli-and-case-data-from-us-states
 example-using-case-data-from-canada
-version-aware-and-unaware-forecasting
+pseudoprospective-vs.-unfaithful-retrospective-forecasting
 example-using-case-data-from-us-states
 examples-of-preprocessing-and-models
 introduction
@@ -18,3 +18,4 @@ classification
 benefits-of-lagging-and-leading-in-epipredict
 references
 attribution
+cover-image-path-to-the-social-sharing-image-like-imagescover.jpg

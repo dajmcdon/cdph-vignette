@@ -11,4 +11,13 @@ Imports:
     covidcast,
     epidatr,
     epipredict,
-    epiprocess
+    epiprocess,
+    tidyr=1.2.0,
+    hardhat=1.2.0,
+    ranger,
+    xgboost
+Remotes:
+    cmu-delphi/epidatr,
+    cmu-delphi/epiprocess,
+    cmu-delphi/epipredict
+

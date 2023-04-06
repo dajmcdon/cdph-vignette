@@ -18,4 +18,3 @@ classification
 benefits-of-lagging-and-leading-in-epipredict
 references
 attribution
-cover-image-path-to-the-social-sharing-image-like-imagescover.jpg

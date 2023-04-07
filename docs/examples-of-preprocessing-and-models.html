@@ -43,11 +43,7 @@
 </form>
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html"><span class="header-section-number">1</span> About</a></li>
-<li><a class="" href="demonstrations-of-sliding-ar-and-arx-forecasters.html"><span class="header-section-number">2</span> Demonstrations of sliding AR and ARX forecasters</a></li>
-<li><a class="active" href="examples-of-preprocessing-and-models.html"><span class="header-section-number">3</span> Examples of Preprocessing and Models</a></li>
-</ul>
+        <ul class="book-toc list-unstyled"><li><a class="" href="index.html"><span class="header-section-number">Chapter 3</span> Examples of Preprocessing and Models</a></li></ul>
 
         <div class="book-extra">
           <p><a id="book-repo" href="https://github.com/dajmcdon/cdph-vignette">View book source <i class="fab fa-github"></i></a></p>
@@ -80,7 +76,7 @@ deaths in the near past.</p>
 will use a Poisson regression to predict death counts. In the second section,
 we will use a linear regression to predict death rates. Last but not least, we
 will create a classification model for hotspot predictions.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/cmu-delphi/epidatr">epidatr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://cmu-delphi.github.io/epiprocess/">epiprocess</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/cmu-delphi/epipredict/">epipredict</a></span><span class="op">)</span></span>
@@ -102,7 +98,7 @@ deploying control measures.</p>
 Although there are many state-of-the-art models, we choose to use Poisson
 regression, the textbook example for modeling count data, as an illustration
 for using the <code>epipredict</code> package with other existing tidymodels packages.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">geos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ca"</span>, <span class="st">"fl"</span>, <span class="st">"tx"</span>, <span class="st">"ny"</span>, <span class="st">"nj"</span><span class="op">)</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/epidatr/man/covidcast.html">covidcast</a></span><span class="op">(</span></span>
 <span>  data_source <span class="op">=</span> <span class="st">"jhu-csse"</span>,</span>
@@ -134,16 +130,17 @@ Dec 31, 2021 in some U.S. states.</p>
 <p>We wish to predict the 7-day ahead death counts with lagged cases and deaths.
 Furthermore, we will let each state be a dummy variable. Using differential
 intercept coefficients, we can allow for an intercept shift between states.</p>
-The model takes the form
+One possible model takes the form
 <span class="math display">\[\begin{aligned}
-\log\left( \mu_{t+7} \right) &amp;= \beta_0 + \delta_1 s_{\text{state}_1} +
+\log\left( \mu_{t+7} \right) &amp;{}= \beta_0 + \delta_1 s_{\text{state}_1} +
 \delta_2 s_{\text{state}_2} + \cdots +  \nonumber \\ &amp;\quad\beta_1 \text{deaths}_{t} + 
 \beta_2 \text{deaths}_{t-7}  + \beta_3 \text{cases}_{t} + 
 \beta_4 \text{cases}_{t-7},
 \end{aligned}\]</span>
-<p>where <span class="math inline">\(\mu_{t+7} = \mathbb{E}(y_{t+7})\)</span>, and <span class="math inline">\(y_{t+7}\)</span> is assumed to follow a
-Poisson distribution with mean <span class="math inline">\(\mu_{t+7}\)</span>; <span class="math inline">\(s_{\text{state}}\)</span> are dummy
-variables for each state and take values of either 0 or 1.</p>
+<p>where <span class="math inline">\(\mu_{t+7} = \mathbb{E}(\text{deaths}_{t+7})\)</span>, and <span class="math inline">\(\text{deaths}_{t+7}\)</span>
+is assumed to follow a Poisson distribution with mean <span class="math inline">\(\mu_{t+7}\)</span>;
+<span class="math inline">\(s_{\text{state}}\)</span> are dummy variables for each state and take values of either
+0 or 1.</p>
 <p>Preprocessing steps will be performed to prepare the
 data for model fitting. But before diving into them, it will be helpful to understand what <code>roles</code> are in the <code>recipes</code> framework.</p>
 <hr>
@@ -181,8 +178,8 @@ the recipe, without overwriting old roles.</p>
 <hr>
 <p>Notice in the following preprocessing steps, we used <code><a href="https://recipes.tidymodels.org/reference/roles.html">add_role()</a></code> on
 <code>geo_value_factor</code> since, currently, the default role for it is <code>raw</code>, but
-we would like to reuse this variable as <code>predictor</code>s.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+we would like to reuse this variable as a <code>predictor</code>.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">counts_subset</span> <span class="op">&lt;-</span> <span class="va">counts_subset</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>geo_value_factor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">geo_value</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://cmu-delphi.github.io/epiprocess/reference/as_epi_df.html">as_epi_df</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -201,7 +198,7 @@ we would like to reuse this variable as <code>predictor</code>s.</p>
 <p>After specifying the preprocessing steps, we will use the <code>parsnip</code> package for
 modeling and producing the prediction for death count, 7 days after the
 latest available date in the dataset.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">latest</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://cmu-delphi.github.io/epipredict/reference/get_test_data.html">get_test_data</a></span><span class="op">(</span><span class="va">r</span>, <span class="va">counts_subset</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">wf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://cmu-delphi.github.io/epipredict/reference/epi_workflow.html">epi_workflow</a></span><span class="op">(</span><span class="va">r</span>, <span class="fu">parsnip</span><span class="fu">::</span><span class="fu"><a href="https://parsnip.tidymodels.org/reference/poisson_reg.html">poisson_reg</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -225,7 +222,7 @@ latest available date in the dataset.</p>
 training set, <strong>NOT</strong> to the target date of the forecast
 (2022-01-07).</p>
 <p>Let’s take a look at the fit:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html">extract_fit_engine</a></span><span class="op">(</span><span class="va">wf</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Call:  stats::glm(formula = ..y ~ ., family = stats::poisson, data = data)</span></span>
@@ -245,27 +242,10 @@ training set, <strong>NOT</strong> to the target date of the forecast
 <span><span class="co">#&gt; Degrees of Freedom: 984 Total (i.e. Null);  976 Residual</span></span>
 <span><span class="co">#&gt; Null Deviance:       139600 </span></span>
 <span><span class="co">#&gt; Residual Deviance: 58110     AIC: 62710</span></span></code></pre></div>
-<p>Up to now, we’ve used the Poisson regression to model count data. Poisson
-regression can also be used to model rate data, such as case rates or death
-rates, by incorporating offset terms in the model.</p>
-To model death rates, the Poisson regression would be expressed as:
-<span class="math display">\[\begin{aligned}
-\log\left( \mu_{t+7} \right) &amp;= \log(\text{population}) + 
-\beta_0 + \delta_1 s_{\text{state}_1} +
-\delta_2 s_{\text{state}_2} + \cdots +  \nonumber \\ &amp;\quad\beta_1 \text{deaths}_{t} + 
-\beta_2 \text{deaths}_{t-7}  + \beta_3 \text{cases}_{t} + 
-\beta_4 \text{cases}_{t-7}\end{aligned}\]</span>
-<p>where <span class="math inline">\(\log(\text{population})\)</span> is the log of the state population that was
-used to scale the count data on the left-hand side of the equation. This offset
-is simply a predictor with coefficient fixed at 1 rather than estimated.</p>
-<p>There are several ways to model rate data given count and population data.
-First, in the <code>parsnip</code> framework, we could specify the formula in <code><a href="https://generics.r-lib.org/reference/fit.html">fit()</a></code>.
-However, by doing so we lose the ability to use the <code>recipes</code> framework to
-create new variables since variables that do not exist in the
-original dataset (such as, here, the lags and leads) cannot be called directly in <code><a href="https://generics.r-lib.org/reference/fit.html">fit()</a></code>.</p>
-<p>Alternatively, <code><a href="https://cmu-delphi.github.io/epipredict/reference/step_population_scaling.html">step_population_scaling()</a></code> and <code><a href="https://cmu-delphi.github.io/epipredict/reference/layer_population_scaling.html">layer_population_scaling()</a></code>
-in the <code>epipredict</code> package can perform the population scaling if we provide the
-population data, which we will illustrate in the next section.</p>
+<p>Alternative forms of Poisson regression or particular computational approaches
+can be applied via arguments to <code><a href="https://parsnip.tidymodels.org/reference/poisson_reg.html">parsnip::poisson_reg()</a></code> for some common
+settings, and by using <code><a href="https://parsnip.tidymodels.org/reference/set_engine.html">parsnip::set_engine()</a></code> to use a specific Poisson
+regression engine and to provide additional engine-specific customization.</p>
 </div>
 </div>
 <div id="linear-regression" class="section level2" number="3.3">
@@ -275,9 +255,11 @@ population data, which we will illustrate in the next section.</p>
 <p>For COVID-19, the CDC required submission of case and death count predictions.
 However, the Delphi Group preferred to train on rate data instead, because it
 puts different locations on a similar scale (eliminating the need for location-specific intercepts).
-We can use a liner regression to predict the death
-rates and use state population data to scale the rates to counts.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;We could continue with the Poisson model, but we’ll switch to the Gaussian likelihood just for simplicity.&lt;/p&gt;"><sup>2</sup></a> We will do so
-using <code><a href="https://cmu-delphi.github.io/epipredict/reference/layer_population_scaling.html">layer_population_scaling()</a></code> from the <code>epipredict</code> package.</p>
+We can use a linear regression to predict the death rates and use state
+population data to scale the rates to counts.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;We could continue with the Poisson model, but we’ll switch to the Gaussian likelihood just for simplicity.&lt;/p&gt;"><sup>1</sup></a> We will do so using
+<code><a href="https://cmu-delphi.github.io/epipredict/reference/layer_population_scaling.html">layer_population_scaling()</a></code> from the <code>epipredict</code> package. (We could also use
+<code><a href="https://cmu-delphi.github.io/epipredict/reference/step_population_scaling.html">step_population_scaling()</a></code> from the <code>epipredict</code> package to prepare rate data
+from count data in the preprocessing recipe.)</p>
 <p>Additionally, when forecasts are submitted, prediction intervals should be
 provided along with the point estimates. This can be obtained via postprocessing
 using
@@ -293,7 +275,7 @@ percentage of respondents who reported that all or most people they encountered
 in public in the past 7 days maintained a distance of at least 6 feet.</p>
 <p>State-wise population data from the 2019 U.S. Census is included in this package
 and will be used in <code><a href="https://cmu-delphi.github.io/epipredict/reference/layer_population_scaling.html">layer_population_scaling()</a></code>.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">behav_ind_mask</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/epidatr/man/covidcast.html">covidcast</a></span><span class="op">(</span></span>
 <span>  data_source <span class="op">=</span> <span class="st">"fb-survey"</span>,</span>
 <span>  signals <span class="op">=</span> <span class="st">"smoothed_wwearing_mask_7d"</span>,</span>
@@ -325,7 +307,7 @@ of illustration, we’ll convert both into categorical predictors.</p>
 <div class="inline-figure"><img src="02-preprocessing-and-models_files/figure-html/unnamed-chunk-6-1.png" width="90%" style="display: block; margin: auto;"></div>
 <p>We will take a subset of death rate and case rate data from the built-in dataset
 <code>case_death_rate_subset</code>.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">jhu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span></span>
 <span>  <span class="va">case_death_rate_subset</span>,</span>
 <span>  <span class="va">time_value</span> <span class="op">&gt;=</span> <span class="st">"2021-06-04"</span>, </span>
@@ -339,7 +321,7 @@ There are also many functions in the <code>recipes</code> package that allow for
 such as log transformations and data centering. In our case, we will
 center the numerical predictors to allow for a more meaningful interpretation of the
 intercept.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">jhu</span> <span class="op">&lt;-</span> <span class="va">jhu</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>geo_value_factor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">geo_value</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">behav_ind</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"geo_value"</span>, <span class="st">"time_value"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -349,13 +331,13 @@ intercept.</p>
 <span>  <span class="fu"><a href="https://recipes.tidymodels.org/reference/roles.html">add_role</a></span><span class="op">(</span><span class="va">geo_value_factor</span>, new_role <span class="op">=</span> <span class="st">"predictor"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://recipes.tidymodels.org/reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">geo_value_factor</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://cmu-delphi.github.io/epipredict/reference/step_epi_shift.html">step_epi_lag</a></span><span class="op">(</span><span class="va">case_rate</span>, <span class="va">death_rate</span>, lag <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">7</span>, <span class="fl">14</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://recipes.tidymodels.org/reference/step_mutate.html">step_mutate</a></span><span class="op">(</span>masking <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/cut_interval.html">cut_number</a></span><span class="op">(</span><span class="va">masking</span>, <span class="fl">5</span><span class="op">)</span>, </span>
-<span>              distancing <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/cut_interval.html">cut_number</a></span><span class="op">(</span><span class="va">distancing</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://recipes.tidymodels.org/reference/step_mutate.html">step_mutate</a></span><span class="op">(</span>masking <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/cut_interval.html">cut_number</a></span><span class="op">(</span><span class="va">masking</span>, <span class="fl">5</span><span class="op">)</span>, </span>
+<span>              distancing <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/cut_interval.html">cut_number</a></span><span class="op">(</span><span class="va">distancing</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://cmu-delphi.github.io/epipredict/reference/step_epi_shift.html">step_epi_ahead</a></span><span class="op">(</span><span class="va">death_rate</span>, ahead <span class="op">=</span> <span class="fl">7</span>, role <span class="op">=</span> <span class="st">"outcome"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://recipes.tidymodels.org/reference/step_center.html">step_center</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"lag"</span><span class="op">)</span>, role <span class="op">=</span> <span class="st">"predictor"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://cmu-delphi.github.io/epipredict/reference/step_epi_naomit.html">step_epi_naomit</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>As a sanity check we can examine the structure of the training data:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_sample</a></span><span class="op">(</span><span class="fu"><a href="https://recipes.tidymodels.org/reference/bake.html">bake</a></span><span class="op">(</span><span class="fu"><a href="https://recipes.tidymodels.org/reference/prep.html">prep</a></span><span class="op">(</span><span class="va">r</span>, <span class="va">jhu</span><span class="op">)</span>, <span class="va">jhu</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">6</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 6</span></span>
 <span><span class="co">#&gt; Columns: 17</span></span>
@@ -381,7 +363,7 @@ obtain the death counts instead of death rates. Note that the rates used so
 far are “per 100K people” rather than “per person.” We’ll also use quantile
 regression with the <code>quantile_reg</code> engine rather than ordinary least squares
 to create median predictions and a 90% prediction interval.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://cmu-delphi.github.io/epipredict/reference/frosting.html">frosting</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://cmu-delphi.github.io/epipredict/reference/layer_predict.html">layer_predict</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://cmu-delphi.github.io/epipredict/reference/layer_add_target_date.html">layer_add_target_date</a></span><span class="op">(</span><span class="st">"2022-01-07"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -420,7 +402,7 @@ to create median predictions and a 90% prediction interval.</p>
 <p>The columns marked <code>*_scaled</code> have been rescaled to the correct units, in this
 case <code>deaths</code> rather than deaths per 100K people (these remain in <code>.pred</code>).</p>
 <p>To look at the prediction intervals:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">geo_value</span>, <span class="va">target_date</span>, <span class="va">.pred_scaled</span>, <span class="va">.pred_distn_scaled</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>.pred_distn_scaled <span class="op">=</span> <span class="fu"><a href="https://cmu-delphi.github.io/epipredict/reference/nested_quantiles.html">nested_quantiles</a></span><span class="op">(</span><span class="va">.pred_distn_scaled</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -509,7 +491,7 @@ g_{\text{flat}}(x) &amp;= \text{ln}\left(\frac{Pr(Z_{\ell,t}=\text{up}|x)}{Pr(Z_
 <p>Preprocessing steps are similar to the previous models with an additional step
 of categorizing the response variables. Again, we will use a subset of death rate and case rate data from our built-in dataset
 <code>case_death_rate_subset</code>.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">jhu</span> <span class="op">&lt;-</span> <span class="va">case_death_rate_subset</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">time_value</span> <span class="op">&gt;=</span> <span class="st">"2021-06-04"</span>, </span>
 <span>                <span class="va">time_value</span> <span class="op">&lt;=</span> <span class="st">"2021-12-31"</span>,</span>
@@ -542,7 +524,7 @@ of categorizing the response variables. Again, we will use a subset of death rat
 <span>          <span class="va">lag_14_case_rate</span>, <span class="va">ahead_7_case_rate</span>, <span class="va">pct_diff_ahead</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://cmu-delphi.github.io/epipredict/reference/step_epi_naomit.html">step_epi_naomit</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>We will fit the multinomial regression and examine the predictions:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">wf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://cmu-delphi.github.io/epipredict/reference/epi_workflow.html">epi_workflow</a></span><span class="op">(</span><span class="va">r</span>, <span class="fu">parsnip</span><span class="fu">::</span><span class="fu"><a href="https://parsnip.tidymodels.org/reference/multinom_reg.html">multinom_reg</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html">fit</a></span><span class="op">(</span><span class="va">jhu</span><span class="op">)</span></span>
 <span></span>
@@ -562,7 +544,7 @@ of categorizing the response variables. Again, we will use a subset of death rat
 <span><span class="co">#&gt; 4 ny        2021-12-31 up         </span></span>
 <span><span class="co">#&gt; 5 tx        2021-12-31 flat</span></span></code></pre></div>
 <p>We can also look at the estimated coefficients and model summary information:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html">extract_fit_engine</a></span><span class="op">(</span><span class="va">wf</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Call:</span></span>
 <span><span class="co">#&gt; nnet::multinom(formula = ..y ~ ., data = data, trace = FALSE)</span></span>
@@ -585,21 +567,21 @@ above. However, only one of <code><a href="https://workflows.tidymodels.org/refe
 <code><a href="https://workflows.tidymodels.org/reference/add_variables.html">workflow_variables()</a></code> can be specified. For the purpose of demonstrating
 <code>add_formula</code> rather than <code>add_recipe</code>, we will <code>prep</code> and <code>bake</code> our recipe to
 return a <code>data.frame</code> that could be used for model fitting.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://recipes.tidymodels.org/reference/bake.html">bake</a></span><span class="op">(</span><span class="fu"><a href="https://recipes.tidymodels.org/reference/prep.html">prep</a></span><span class="op">(</span><span class="va">r</span>, <span class="va">jhu</span><span class="op">)</span>, <span class="va">jhu</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://cmu-delphi.github.io/epipredict/reference/epi_workflow.html">epi_workflow</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://workflows.tidymodels.org/reference/add_formula.html">add_formula</a></span><span class="op">(</span><span class="va">response</span> <span class="op">~</span> <span class="va">geo_value</span> <span class="op">+</span> <span class="va">time_value</span> <span class="op">+</span> <span class="va">pct_diff_wk1</span> <span class="op">+</span> <span class="va">pct_diff_wk2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://workflows.tidymodels.org/reference/add_model.html">add_model</a></span><span class="op">(</span><span class="fu">parsnip</span><span class="fu">::</span><span class="fu"><a href="https://parsnip.tidymodels.org/reference/multinom_reg.html">multinom_reg</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html">fit</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">b</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ══ Workflow [trained] ══════════════════════════════════════</span></span>
+<span><span class="co">#&gt; ══ Workflow [trained] ═════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════</span></span>
 <span><span class="co">#&gt; Preprocessor: Formula</span></span>
 <span><span class="co">#&gt; Model: multinom_reg()</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ── Preprocessor ────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; ── Preprocessor ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; response ~ geo_value + time_value + pct_diff_wk1 + pct_diff_wk2</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ── Model ───────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; ── Model ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; Call:</span></span>
 <span><span class="co">#&gt; nnet::multinom(formula = ..y ~ ., data = data, trace = FALSE)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -621,7 +603,7 @@ return a <code>data.frame</code> that could be used for model fitting.</p>
 <p>The <code>step_epi_ahead</code> and <code>step_epi_lag</code> functions in the <code>epipredict</code> package
 is handy for creating correct lags and leads for future predictions.</p>
 <p>Let’s start with a simple dataset and preprocessing:</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span></span>
 <span>  <span class="va">case_death_rate_subset</span>, </span>
 <span>  <span class="va">time_value</span> <span class="op">&gt;=</span> <span class="st">"2021-12-01"</span>, </span>
@@ -634,7 +616,7 @@ is handy for creating correct lags and leads for future predictions.</p>
 <p>We want to predict death rates on 2022-01-07, which is 7 days ahead of the
 latest available date in our dataset.</p>
 <p>We will compare two methods of trying to create lags and leads:</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://cmu-delphi.github.io/epipredict/reference/epi_recipe.html">epi_recipe</a></span><span class="op">(</span><span class="va">ex</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://cmu-delphi.github.io/epipredict/reference/step_epi_shift.html">step_epi_lag</a></span><span class="op">(</span><span class="va">case_rate</span>, lag <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">7</span>, <span class="fl">14</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://cmu-delphi.github.io/epipredict/reference/step_epi_shift.html">step_epi_lag</a></span><span class="op">(</span><span class="va">death_rate</span>, lag <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">7</span>, <span class="fl">14</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -703,7 +685,7 @@ latest available date in our dataset.</p>
 <p>Notice the difference in number of rows <code>b1</code> and <code>b2</code> returns. This is because
 the second version, the one that doesn’t use <code>step_epi_ahead</code> and <code>step_epi_lag</code>,
 has omitted dates compared to the one that used the <code>epipredict</code> functions.</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dates_used_in_training1</span> <span class="op">&lt;-</span> <span class="va">b1</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span> <span class="va">ahead_7_death_rate</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -777,27 +759,16 @@ on behalf of its Center for Systems Science in Engineering. Copyright Johns Hopk
 
 
 
-
   <div class="chapter-nav">
-<div class="prev"><a href="demonstrations-of-sliding-ar-and-arx-forecasters.html"><span class="header-section-number">2</span> Demonstrations of sliding AR and ARX forecasters</a></div>
+<div class="empty"></div>
 <div class="empty"></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#examples-of-preprocessing-and-models"><span class="header-section-number">3</span> Examples of Preprocessing and Models</a></li>
-<li><a class="nav-link" href="#introduction"><span class="header-section-number">3.1</span> Introduction</a></li>
-<li><a class="nav-link" href="#poisson-regression"><span class="header-section-number">3.2</span> Poisson Regression</a></li>
-<li><a class="nav-link" href="#linear-regression"><span class="header-section-number">3.3</span> Linear Regression</a></li>
-<li><a class="nav-link" href="#classification"><span class="header-section-number">3.4</span> Classification</a></li>
-<li><a class="nav-link" href="#benefits-of-lagging-and-leading-in-epipredict"><span class="header-section-number">3.5</span> Benefits of Lagging and Leading in epipredict</a></li>
-<li><a class="nav-link" href="#references"><span class="header-section-number">3.6</span> References</a></li>
-<li><a class="nav-link" href="#attribution"><span class="header-section-number">3.7</span> Attribution</a></li>
-</ul>
+      <div id="book-on-this-page"></div>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/dajmcdon/cdph-vignette/blob/master/02-preprocessing-and-models.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/dajmcdon/cdph-vignette/edit/master/02-preprocessing-and-models.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+          
         </ul>
 </div>
     </nav>
@@ -809,7 +780,7 @@ on behalf of its Center for Systems Science in Engineering. Copyright Johns Hopk
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Vignette on Delphi Tooling for CDPH</strong>" was written by Logan Brooks, Daniel J. McDonald, and Ryan J. Tibshirani. It was last built on 2023-04-06.</p>
+    <p>"<strong>Vignette on Delphi Tooling for CDPH</strong>" was written by Logan Brooks, Daniel J. McDonald, and Ryan J. Tibshirani. It was last built on 2023-04-07.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

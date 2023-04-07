@@ -87,16 +87,17 @@ We wish to predict the 7-day ahead death counts with lagged cases and deaths.
 Furthermore, we will let each state be a dummy variable. Using differential 
 intercept coefficients, we can allow for an intercept shift between states.
 
-The model takes the form
+One possible model takes the form
 \begin{aligned}
-\log\left( \mu_{t+7} \right) &= \beta_0 + \delta_1 s_{\text{state}_1} +
+\log\left( \mu_{t+7} \right) &{}= \beta_0 + \delta_1 s_{\text{state}_1} +
 \delta_2 s_{\text{state}_2} + \cdots +  \nonumber \\ &\quad\beta_1 \text{deaths}_{t} + 
 \beta_2 \text{deaths}_{t-7}  + \beta_3 \text{cases}_{t} + 
 \beta_4 \text{cases}_{t-7},
 \end{aligned}
-where $\mu_{t+7} = \mathbb{E}(y_{t+7})$, and $y_{t+7}$ is assumed to follow a 
-Poisson distribution with mean $\mu_{t+7}$; $s_{\text{state}}$ are dummy 
-variables for each state and take values of either 0 or 1. 
+where $\mu_{t+7} = \mathbb{E}(\text{deaths}_{t+7})$, and $\text{deaths}_{t+7}$
+is assumed to follow a Poisson distribution with mean $\mu_{t+7}$;
+$s_{\text{state}}$ are dummy variables for each state and take values of either
+0 or 1.
 
 Preprocessing steps will be performed to prepare the
 data for model fitting. But before diving into them, it will be helpful to understand what `roles` are in the `recipes` framework. 
@@ -137,7 +138,7 @@ manipulate variable roles easily.
 
 Notice in the following preprocessing steps, we used `add_role()` on 
 `geo_value_factor` since, currently, the default role for it is `raw`, but
-we would like to reuse this variable as `predictor`s. 
+we would like to reuse this variable as a `predictor`.
 
 
 ```r
@@ -214,30 +215,11 @@ extract_fit_engine(wf)
 #> Residual Deviance: 58110 	AIC: 62710
 ```
 
-Up to now, we've used the Poisson regression to model count data. Poisson 
-regression can also be used to model rate data, such as case rates or death
-rates, by incorporating offset terms in the model. 
+Alternative forms of Poisson regression or particular computational approaches
+can be applied via arguments to `parsnip::poisson_reg()` for some common
+settings, and by using `parsnip::set_engine()` to use a specific Poisson
+regression engine and to provide additional engine-specific customization.
 
-To model death rates, the Poisson regression would be expressed as:
-\begin{aligned}
-\log\left( \mu_{t+7} \right) &= \log(\text{population}) + 
-\beta_0 + \delta_1 s_{\text{state}_1} +
-\delta_2 s_{\text{state}_2} + \cdots +  \nonumber \\ &\quad\beta_1 \text{deaths}_{t} + 
-\beta_2 \text{deaths}_{t-7}  + \beta_3 \text{cases}_{t} + 
-\beta_4 \text{cases}_{t-7}\end{aligned}
-where $\log(\text{population})$ is the log of the state population that was 
-used to scale the count data on the left-hand side of the equation. This offset
-is simply a predictor with coefficient fixed at 1 rather than estimated.
-
-There are several ways to model rate data given count and population data. 
-First, in the `parsnip` framework, we could specify the formula in `fit()`. 
-However, by doing so we lose the ability to use the `recipes` framework to 
-create new variables since variables that do not exist in the 
-original dataset (such as, here, the lags and leads) cannot be called directly in `fit()`. 
-
-Alternatively, `step_population_scaling()` and `layer_population_scaling()` 
-in the `epipredict` package can perform the population scaling if we provide the 
-population data, which we will illustrate in the next section.
 
 
 ## Linear Regression 
@@ -245,9 +227,11 @@ population data, which we will illustrate in the next section.
 For COVID-19, the CDC required submission of case and death count predictions. 
 However, the Delphi Group preferred to train on rate data instead, because it 
 puts different locations on a similar scale (eliminating the need for location-specific intercepts). 
-We can use a liner regression to predict the death
-rates and use state population data to scale the rates to counts.[^pois] We will do so 
-using `layer_population_scaling()` from the `epipredict` package. 
+We can use a linear regression to predict the death rates and use state
+population data to scale the rates to counts.[^pois] We will do so using
+`layer_population_scaling()` from the `epipredict` package. (We could also use
+`step_population_scaling()` from the `epipredict` package to prepare rate data
+from count data in the preprocessing recipe.)
 
 [^pois]: We could continue with the Poisson model, but we'll switch to the Gaussian likelihood just for simplicity.
 
@@ -613,14 +597,14 @@ epi_workflow() %>%
   add_formula(response ~ geo_value + time_value + pct_diff_wk1 + pct_diff_wk2) %>%
   add_model(parsnip::multinom_reg()) %>%
   fit(data = b)
-#> ══ Workflow [trained] ══════════════════════════════════════
+#> ══ Workflow [trained] ═════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
 #> Preprocessor: Formula
 #> Model: multinom_reg()
 #> 
-#> ── Preprocessor ────────────────────────────────────────────
+#> ── Preprocessor ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 #> response ~ geo_value + time_value + pct_diff_wk1 + pct_diff_wk2
 #> 
-#> ── Model ───────────────────────────────────────────────────
+#> ── Model ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 #> Call:
 #> nnet::multinom(formula = ..y ~ ., data = data, trace = FALSE)
 #> 

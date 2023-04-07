@@ -1,7 +1,7 @@
 --- 
 title: "Vignette on Delphi Tooling for CDPH"
 author: "Logan Brooks, Daniel J. McDonald, and Ryan J. Tibshirani"
-date: "2023-04-06"
+date: "2023-04-07"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]

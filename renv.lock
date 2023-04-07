@@ -420,6 +420,20 @@
       ],
       "Hash": "3f038e5ac7f41d4ac41ce658c85e3042"
     },
+    "clock": {
+      "Package": "clock",
+      "Version": "0.6.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "cpp11",
+        "rlang",
+        "tzdb",
+        "vctrs"
+      ],
+      "Hash": "db6b0e88fa092982ecf56322b47be0fe"
+    },
     "codetools": {
       "Package": "codetools",
       "Version": "0.2-19",
@@ -696,7 +710,7 @@
       "RemoteUsername": "cmu-delphi",
       "RemoteRepo": "epipredict",
       "RemoteRef": "main",
-      "RemoteSha": "61e05cf0753d8eed936906d9d3ac8ca9c45fc922",
+      "RemoteSha": "56bac8a6a67b8f75d3ab9f00485c3e8cb44edde1",
       "Remotes": "cmu-delphi/epidatr, cmu-delphi/epiprocess",
       "Requirements": [
         "R",
@@ -722,7 +736,7 @@
         "vctrs",
         "workflows"
       ],
-      "Hash": "ce26b448e6266abe2e8025d623aef6df"
+      "Hash": "6ee812b6732231a5c1bd8316b2ea71c3"
     },
     "epiprocess": {
       "Package": "epiprocess",
@@ -1141,23 +1155,18 @@
     },
     "hardhat": {
       "Package": "hardhat",
-      "Version": "1.2.0",
+      "Version": "1.3.0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "RemoteType": "standard",
-      "RemotePkgRef": "hardhat",
-      "RemoteRef": "hardhat",
-      "RemoteRepos": "https://cran.rstudio.com",
-      "RemotePkgPlatform": "source",
-      "RemoteSha": "1.2.0",
       "Requirements": [
         "R",
+        "cli",
         "glue",
         "rlang",
         "tibble",
         "vctrs"
       ],
-      "Hash": "7cd2660e174e555b05aaeac979dee22b"
+      "Hash": "b56b42c50bb7c76a683e8e61f415d828"
     },
     "haven": {
       "Package": "haven",
@@ -1875,13 +1884,14 @@
     },
     "recipes": {
       "Package": "recipes",
-      "Version": "1.0.1",
+      "Version": "1.0.5",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "Matrix",
         "R",
         "cli",
+        "clock",
         "dplyr",
         "ellipsis",
         "generics",
@@ -1903,7 +1913,7 @@
         "vctrs",
         "withr"
       ],
-      "Hash": "6ea4fdbc49ae227bf37eea030da5a995"
+      "Hash": "a3ad6802b18da51f9d38ac7ae8949166"
     },
     "rematch": {
       "Package": "rematch",

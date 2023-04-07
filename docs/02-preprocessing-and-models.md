@@ -59,9 +59,8 @@ x <- covidcast(
   time_type = "day",
   geo_type = "state",
   time_values = epirange(20210604, 20211231),
-  geo_values = "*") %>%
+  geo_values = geos) %>%
   fetch_tbl() %>%
-  filter(geo_value %in% geos) %>%
   select(geo_value, time_value, cases = value)
 
 y <- covidcast(
@@ -70,9 +69,8 @@ y <- covidcast(
   time_type = "day",
   geo_type = "state",
   time_values = epirange(20210604, 20211231),
-  geo_values = "*") %>%
+  geo_values = geos) %>%
   fetch_tbl() %>%
-  filter(geo_value %in% geos) %>%
   select(geo_value, time_value, deaths = value)
 
 counts_subset <- full_join(x, y, by = c("geo_value", "time_value")) %>%
@@ -261,9 +259,8 @@ behav_ind_mask <- covidcast(
   time_type = "day",
   geo_type = "state",
   time_values = epirange(20210604, 20211231),
-  geo_values = "*")  %>%
+  geo_values = geos)  %>%
   fetch_tbl() %>%
-  filter(geo_value %in% geos) %>%
   select(geo_value, time_value, masking = value)
 
 behav_ind_distancing <- covidcast(
@@ -272,9 +269,8 @@ behav_ind_distancing <- covidcast(
   time_type = "day",
   geo_type = "state",
   time_values = epirange(20210604, 20211231),
-  geo_values = "*")  %>%
+  geo_values = geos)  %>%
   fetch_tbl() %>%
-  filter(geo_value %in% geos) %>%
   select(geo_value, time_value, distancing = value) 
 
 pop_dat <- state_census %>% select(abbr, pop)

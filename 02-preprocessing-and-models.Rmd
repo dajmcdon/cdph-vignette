@@ -100,7 +100,7 @@ data for model fitting. But before diving into them, it will be helpful to under
 
 ---
 
-#### Aside on `recipes`
+#### Aside on `recipes` {.unnumbered}
 
 `recipes` can assign one or more roles to each column in the data. The roles 
 are not restricted to a predefined set; they can be anything. 
@@ -128,7 +128,7 @@ manipulate variable roles easily.
 > 
 > `remove_role()` eliminates a single existing role in the recipe.
 
-#### End aside
+#### End aside {.unnumbered}
 
 ---
 

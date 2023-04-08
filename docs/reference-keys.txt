@@ -8,6 +8,7 @@ example-using-cli-and-case-data-from-us-states
 example-using-case-data-from-canada
 pseudoprospective-vs.-unfaithful-retrospective-forecasting
 example-using-case-data-from-us-states
+attribution
 examples-of-preprocessing-and-models
 introduction
 poisson-regression
@@ -17,6 +18,5 @@ linear-regression
 classification
 benefits-of-lagging-and-leading-in-epipredict
 references
-attribution
-cover-image-path-to-the-social-sharing-image-like-imagescover.jpg
 attribution-1
+cover-image-path-to-the-social-sharing-image-like-imagescover.jpg

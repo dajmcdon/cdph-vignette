@@ -1,7 +1,9 @@
-about
-usage
-render-book
-preview-book
+introduction
+installation
+documentation
+goals-for-epipredict
+intermediate-example
+contents
 demonstrations-of-sliding-ar-and-arx-forecasters
 comparing-different-forecasting-engines
 example-using-cli-and-case-data-from-us-states
@@ -10,7 +12,7 @@ pseudoprospective-vs.-unfaithful-retrospective-forecasting
 example-using-case-data-from-us-states
 attribution
 examples-of-preprocessing-and-models
-introduction
+introduction-1
 poisson-regression
 linear-regression
 classification

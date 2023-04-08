@@ -12,11 +12,8 @@ attribution
 examples-of-preprocessing-and-models
 introduction
 poisson-regression
-aside-on-recipes
-end-aside
 linear-regression
 classification
 benefits-of-lagging-and-leading-in-epipredict
 references
 attribution-1
-cover-image-path-to-the-social-sharing-image-like-imagescover.jpg

@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 3 Examples of Preprocessing and Models | Vignette on Delphi Tooling for CDPH</title>
-<meta name="author" content="Logan Brooks, Daniel J. McDonald, and Ryan J. Tibshirani">
+<meta name="author" content="Logan C. Brooks, Daniel J. McDonald, and Ryan J. Tibshirani">
 <meta name="description" content="3.1 Introduction The epipredict package utilizes the tidymodels framework, namely {recipes} for dplyr-like pipeable sequences of feature engineering and {parsnip} for a unified interface to a...">
 <meta name="generator" content="bookdown 0.33 with bs4_book()">
 <meta property="og:title" content="Chapter 3 Examples of Preprocessing and Models | Vignette on Delphi Tooling for CDPH">
@@ -135,8 +135,8 @@ intercept coefficients, we can allow for an intercept shift between states.</p>
 One possible model takes the form
 <span class="math display">\[\begin{aligned}
 \log\left( \mu_{t+7} \right) &amp;{}= \beta_0 + \delta_1 s_{\text{state}_1} +
-\delta_2 s_{\text{state}_2} + \cdots +  \nonumber \\ &amp;\quad\beta_1 \text{deaths}_{t} +
-\beta_2 \text{deaths}_{t-7}  + \beta_3 \text{cases}_{t} +
+\delta_2 s_{\text{state}_2} + \cdots +  \nonumber \\ &amp;\quad\beta_1 \text{deaths}_{t} + 
+\beta_2 \text{deaths}_{t-7}  + \beta_3 \text{cases}_{t} + 
 \beta_4 \text{cases}_{t-7},
 \end{aligned}\]</span>
 <p>where <span class="math inline">\(\mu_{t+7} = \mathbb{E}(\text{deaths}_{t+7})\)</span>, and <span class="math inline">\(\text{deaths}_{t+7}\)</span>
@@ -152,7 +152,7 @@ data for model fitting. But before diving into them, it will be helpful to under
 <p><code>recipes</code> can assign one or more roles to each column in the data. The roles
 are not restricted to a predefined set; they can be anything.
 For most conventional situations, they are typically “predictor” and/or
-“outcome”. Additional roles enable targeted <code>step_*()</code> operations on specific
+“outcome.” Additional roles enable targeted <code>step_*()</code> operations on specific
 variables or groups of variables.</p>
 <p>In our case, the role <code>predictor</code> is given to explanatory variables on the
 right-hand side of the model (in the equation above).
@@ -358,7 +358,7 @@ intercept.</p>
 <span><span class="co">#&gt; $ ahead_7_death_rate  &lt;dbl&gt; 0.1221261, 0.0347229, 0.206839…</span></span></code></pre></div>
 <p>Before directly predicting the results, we need to add postprocessing layers to
 obtain the death counts instead of death rates. Note that the rates used so
-far are “per 100K people” rather than “per person”. We’ll also use quantile
+far are “per 100K people” rather than “per person.” We’ll also use quantile
 regression with the <code>quantile_reg</code> engine rather than ordinary least squares
 to create median predictions and a 90% prediction interval.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
@@ -446,7 +446,7 @@ rather than for raw values. In this case,
 the target is to predict if the future will have increased case rates (denoted <code>up</code>),
 decreased case rates (<code>down</code>), or flat case rates (<code>flat</code>) relative to the current
 level. Such models may be
-referred to as “hotspot prediction models”. We will follow the analysis
+referred to as “hotspot prediction models.” We will follow the analysis
 in <a href="examples-of-preprocessing-and-models.html#references">McDonald, Bien, Green, Hu, et al.</a> but extend the application
 to predict three categories instead of two.</p>
 <p>Hotspot prediction uses a categorical outcome variable defined in terms of the
@@ -454,9 +454,9 @@ relative change of <span class="math inline">\(Y_{\ell, t+a}\)</span> compared t
 Where <span class="math inline">\(Y_{\ell, t}\)</span> denotes the case rates in location <span class="math inline">\(\ell\)</span> at time <span class="math inline">\(t\)</span>.
 We define the response variables as follows:</p>
 <p><span class="math display">\[
-Z_{\ell, t}=
+ Z_{\ell, t}=
     \begin{cases}
-      \text{up}, &amp; \text{if}\ Y^{\Delta}_{\ell, t} &gt; 0.25 \\
+      \text{up}, &amp; \text{if}\ Y^{\Delta}_{\ell, t} &gt; 0.25 \\ 
       \text{down}, &amp; \text{if}\  Y^{\Delta}_{\ell, t} &lt; -0.20\\
       \text{flat}, &amp; \text{otherwise}
     \end{cases}
@@ -475,12 +475,12 @@ consider the trend to be <code>flat</code>.</p>
 where <span class="math inline">\(j\)</span> is either down, flat, or up</p>
 <span class="math display">\[\begin{aligned}
 g_{\text{down}}(x) &amp;= 0.\\
-g_{\text{flat}}(x)&amp;= \text{ln}\left(\frac{Pr(Z_{\ell,t}=\text{flat}|x)}{Pr(Z_{\ell,t}=\text{down}|x)}\right) =
+g_{\text{flat}}(x)&amp;= \text{ln}\left(\frac{Pr(Z_{\ell,t}=\text{flat}|x)}{Pr(Z_{\ell,t}=\text{down}|x)}\right) = 
 \beta_{10} + \beta_{11}t + \delta_{10} s_{\text{state_1}} +
 \delta_{11} s_{\text{state_2}} + \cdots \nonumber \\
 &amp;\quad + \beta_{12} Y^{\Delta}_{\ell, t} +
 \beta_{13} Y^{\Delta}_{\ell, t-7} \\
-g_{\text{flat}}(x) &amp;= \text{ln}\left(\frac{Pr(Z_{\ell,t}=\text{up}|x)}{Pr(Z_{\ell,t}=\text{down}|x)}\right) =
+g_{\text{flat}}(x) &amp;= \text{ln}\left(\frac{Pr(Z_{\ell,t}=\text{up}|x)}{Pr(Z_{\ell,t}=\text{down}|x)}\right) = 
 \beta_{20} + \beta_{21}t + \delta_{20} s_{\text{state_1}} +
 \delta_{21} s_{\text{state}_2} + \cdots \nonumber \\
 &amp;\quad + \beta_{22} Y^{\Delta}_{\ell, t} +
@@ -798,7 +798,7 @@ Johns Hopkins University 2020.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Vignette on Delphi Tooling for CDPH</strong>" was written by Logan Brooks, Daniel J. McDonald, and Ryan J. Tibshirani. It was last built on 2023-04-08.</p>
+    <p>"<strong>Vignette on Delphi Tooling for CDPH</strong>" was written by Logan C. Brooks, Daniel J. McDonald, and Ryan J. Tibshirani. It was last built on 2023-04-10.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

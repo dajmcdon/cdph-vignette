@@ -1,7 +1,7 @@
 --- 
 title: "Vignette on Delphi Tooling for CDPH"
-author: "Logan Brooks, Daniel J. McDonald, and Ryan J. Tibshirani"
-date: "2023-04-08"
+author: "Logan C. Brooks, Daniel J. McDonald, and Ryan J. Tibshirani"
+date: "2023-04-10"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
@@ -61,7 +61,7 @@ Even the Advanced user should find their task to be relatively easy. Examples of
 The package comes with some built-in historical data for illustration, but
 up-to-date versions of this could be downloaded with the [`{covidcast}` package](https://cmu-delphi.github.io/covidcast/covidcastR/index.html) and processed using [`{epiprocess}`](https://cmu-delphi.github.io/epiprocess/).[^index1]
 
-[^index1]: Other epidemiological signals for non-Covid related illnesses are available with [`{epidatr}`](https://github.com/cmu-delphi/epidatr) which interfaces directly to Delphi's [Epidata API](https://cmu-delphi.github.io/delphi-epidata/)
+[^index1]: COVIDcast data and other epidemiological signals for non-Covid related illnesses are available with [`{epidatr}`](https://cmu-delphi.github.io/epidatr), which interfaces directly to Delphi's [Epidata API](https://cmu-delphi.github.io/delphi-epidata/).
 
 
 ```r
@@ -178,7 +178,7 @@ two_week_ahead$predictions
 ```
 
 The results above show a distributional forecast produced using data through the end of 2021 for the 14th of January 2022. A prediction for the death rate per 100K inhabitants is available for every state (`geo_value`) along with a 90% predictive interval. The figure below
-displays the forecast for a small handful of states. The vertical black line is the forecast date. The forecast doesn't appear to be particularly good, but our choice above were intended to be illustrative of the functionality rather than optimized for accuracy.
+displays the forecast for a small handful of states. The vertical black line is the forecast date. The forecast doesn't appear to be particularly good, but our choices above were intended to be illustrative of the functionality rather than optimized for accuracy.
 
 <img src="index_files/figure-html/unnamed-chunk-1-1.png" width="90%" style="display: block; margin: auto;" />
 

@@ -13,7 +13,6 @@ Imports:
     epidatr,
     epipredict,
     epiprocess,
-    tidyr (==1.2.0),
     hardhat,
     ranger,
     xgboost

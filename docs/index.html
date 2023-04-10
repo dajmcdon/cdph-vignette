@@ -4,18 +4,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 1 About | Vignette on Delphi Tooling for CDPH</title>
-<meta name="author" content="Logan Brooks, Daniel J. McDonald, and Ryan J. Tibshirani">
+<title>Chapter 1 Introduction | Vignette on Delphi Tooling for CDPH</title>
+<meta name="author" content="Logan C. Brooks, Daniel J. McDonald, and Ryan J. Tibshirani">
 <meta name="description" content="This is a longform vignette describing the epiprocess and epipredict&lt;/code&gt;
 R packages.&lt;/p&gt;">
 <meta name="generator" content="bookdown 0.33 with bs4_book()">
-<meta property="og:title" content="Chapter 1 About | Vignette on Delphi Tooling for CDPH">
+<meta property="og:title" content="Chapter 1 Introduction | Vignette on Delphi Tooling for CDPH">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://delphi.cmu.edu/">
 <meta property="og:description" content="This is a longform vignette describing the epiprocess and epipredict&lt;/code&gt;
 R packages.&lt;/p&gt;">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 1 About | Vignette on Delphi Tooling for CDPH">
+<meta name="twitter:title" content="Chapter 1 Introduction | Vignette on Delphi Tooling for CDPH">
 <meta name="twitter:description" content="This is a longform vignette describing the epiprocess and epipredict&lt;/code&gt;
 R packages.&lt;/p&gt;">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -47,7 +47,7 @@ R packages.&lt;/p&gt;">
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
-<li><a class="active" href="index.html"><span class="header-section-number">1</span> About</a></li>
+<li><a class="active" href="index.html"><span class="header-section-number">1</span> Introduction</a></li>
 <li><a class="" href="demonstrations-of-sliding-ar-and-arx-forecasters.html"><span class="header-section-number">2</span> Demonstrations of sliding AR and ARX forecasters</a></li>
 <li><a class="" href="examples-of-preprocessing-and-models.html"><span class="header-section-number">3</span> Examples of Preprocessing and Models</a></li>
 </ul>
@@ -57,53 +57,188 @@ R packages.&lt;/p&gt;">
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><!--bookdown:title:end--><!--bookdown:title:start--><div id="about" class="section level1" number="1">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><!--bookdown:title:end--><!--bookdown:title:start--><div id="introduction" class="section level1" number="1">
 <h1>
-<span class="header-section-number">1</span> About<a class="anchor" aria-label="anchor" href="#about"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1</span> Introduction<a class="anchor" aria-label="anchor" href="#introduction"><i class="fas fa-link"></i></a>
 </h1>
-<p>This is a <em>sample</em> book written in <strong>Markdown</strong>. You can use anything that Pandoc’s Markdown supports; for example, a math equation <span class="math inline">\(a^2 + b^2 = c^2\)</span>.</p>
-<div id="usage" class="section level2" number="1.1">
+<p>This long-form vignette describes some of the functionality of the
+<code>epipredict</code> R package, with an eye toward creating various types of
+forecasters, from simple baselines to more elaborate customizations.</p>
+<div id="installation" class="section level2" number="1.1">
 <h2>
-<span class="header-section-number">1.1</span> Usage<a class="anchor" aria-label="anchor" href="#usage"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.1</span> Installation<a class="anchor" aria-label="anchor" href="#installation"><i class="fas fa-link"></i></a>
 </h2>
-<p>Each <strong>bookdown</strong> chapter is an .Rmd file, and each .Rmd file can contain one (and only one) chapter. A chapter <em>must</em> start with a first-level heading: <code># A good chapter</code>, and can contain one (and only one) first-level heading.</p>
-<p>Use second-level and higher headings within chapters like: <code>## A short section</code> or <code>### An even shorter section</code>.</p>
-<p>The <code>index.Rmd</code> file is required, and is also your first book chapter. It will be the homepage when you render the book.</p>
-</div>
-<div id="render-book" class="section level2" number="1.2">
-<h2>
-<span class="header-section-number">1.2</span> Render book<a class="anchor" aria-label="anchor" href="#render-book"><i class="fas fa-link"></i></a>
-</h2>
-<p>You can render the HTML version of this example book without changing anything:</p>
-<ol style="list-style-type: decimal">
-<li><p>Find the <strong>Build</strong> pane in the RStudio IDE, and</p></li>
-<li><p>Click on <strong>Build Book</strong>, then select your output format, or select “All formats” if you’d like to use multiple formats from the same book source files.</p></li>
-</ol>
-<p>Or build the book from the R console:</p>
+<p>You can install the development version of epipredict from <a href="https://github.com/">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">bookdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgs.rstudio.com/bookdown/reference/render_book.html">render_book</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>To render this example to PDF as a <code><a href="https://pkgs.rstudio.com/bookdown/reference/pdf_book.html">bookdown::pdf_book</a></code>, you’ll need to install XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): <a href="https://yihui.org/tinytex/" class="uri">https://yihui.org/tinytex/</a>.</p>
+<code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"cmu-delphi/epipredict"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="preview-book" class="section level2" number="1.3">
+<div id="documentation" class="section level2" number="1.2">
 <h2>
-<span class="header-section-number">1.3</span> Preview book<a class="anchor" aria-label="anchor" href="#preview-book"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.2</span> Documentation<a class="anchor" aria-label="anchor" href="#documentation"><i class="fas fa-link"></i></a>
 </h2>
-<p>As you work, you may start a local server to live preview this HTML book. This preview will update as you edit the book when you save individual .Rmd files. You can start the server in a work session by using the RStudio add-in “Preview book”, or from the R console:</p>
+<p>You can view the complete documentation for the package at <a href="https://cmu-delphi.github.io/epipredict" class="uri">https://cmu-delphi.github.io/epipredict</a>.</p>
+</div>
+<div id="goals-for-epipredict" class="section level2" number="1.3">
+<h2>
+<span class="header-section-number">1.3</span> Goals for <code>epipredict</code><a class="anchor" aria-label="anchor" href="#goals-for-epipredict"><i class="fas fa-link"></i></a>
+</h2>
+<p><strong>We currently provide:</strong></p>
+<ol style="list-style-type: decimal">
+<li>A set of basic, easy-to-use forecasters that work out of the box. You can do a reasonable amount of customization on them. For the basic forecasters, we currently provide:
+<ul>
+<li>Baseline flat-line forecaster</li>
+<li>Autoregressive forecaster</li>
+<li>Autoregressive (multinomial) classifier</li>
+</ul>
+</li>
+<li>A framework for creating custom forecasters out of modular components. There are four types of components:
+<ul>
+<li>Preprocessor: do things to the raw data before model training that should be reproduced at test time.</li>
+<li>Trainer: train a model on data, resulting in a fitted model object</li>
+<li>Predictor: make predictions, using a fitted model object</li>
+<li>Postprocessor: do things to the predictions before returning</li>
+</ul>
+</li>
+</ol>
+<p><strong>Target audiences:</strong></p>
+<ul>
+<li>Basic. Has data, calls forecaster with default arguments.</li>
+<li>Intermediate. Wants to examine changes to the arguments, take advantage of some built in flexibility.</li>
+<li>Advanced. Wants to write their own forecasters. Maybe willing to build up from some components that we write.</li>
+</ul>
+<p>Even the Advanced user should find their task to be relatively easy. Examples of these tasks are illustrated in the <a href="https://cmu-delphi.github.io/epipredict">vignettes and articles</a>.</p>
+</div>
+<div id="intermediate-example" class="section level2" number="1.4">
+<h2>
+<span class="header-section-number">1.4</span> Intermediate example<a class="anchor" aria-label="anchor" href="#intermediate-example"><i class="fas fa-link"></i></a>
+</h2>
+<p>The package comes with some built-in historical data for illustration, but
+up-to-date versions of this could be downloaded with the <a href="https://cmu-delphi.github.io/covidcast/covidcastR/index.html"><code>{covidcast}</code> package</a> and processed using <a href="https://cmu-delphi.github.io/epiprocess/"><code>{epiprocess}</code></a>.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;COVIDcast data and other epidemiological signals for non-Covid related illnesses are available with &lt;a href="https://cmu-delphi.github.io/epidatr"&gt;&lt;code&gt;{epidatr}&lt;/code&gt;&lt;/a&gt;, which interfaces directly to Delphi’s &lt;a href="https://cmu-delphi.github.io/delphi-epidata/"&gt;Epidata API&lt;/a&gt;.&lt;/p&gt;'><sup>1</sup></a></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">bookdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgs.rstudio.com/bookdown/reference/serve_book.html">serve_book</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/cmu-delphi/epipredict/">epipredict</a></span><span class="op">)</span></span>
+<span><span class="va">jhu</span> <span class="op">&lt;-</span> <span class="va">case_death_rate_subset</span></span>
+<span><span class="va">jhu</span></span>
+<span><span class="co">#&gt; An `epi_df` object, 20,496 x 4 with metadata:</span></span>
+<span><span class="co">#&gt; * geo_type  = state</span></span>
+<span><span class="co">#&gt; * time_type = day</span></span>
+<span><span class="co">#&gt; * as_of     = 2022-05-31 12:08:25</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; # A tibble: 20,496 × 4</span></span>
+<span><span class="co">#&gt;    geo_value time_value case_rate death_rate</span></span>
+<span><span class="co">#&gt;  * &lt;chr&gt;     &lt;date&gt;         &lt;dbl&gt;      &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 ak        2020-12-31      35.9      0.158</span></span>
+<span><span class="co">#&gt;  2 al        2020-12-31      65.1      0.438</span></span>
+<span><span class="co">#&gt;  3 ar        2020-12-31      66.0      1.27 </span></span>
+<span><span class="co">#&gt;  4 as        2020-12-31       0        0    </span></span>
+<span><span class="co">#&gt;  5 az        2020-12-31      76.8      1.10 </span></span>
+<span><span class="co">#&gt;  6 ca        2020-12-31      96.0      0.751</span></span>
+<span><span class="co">#&gt;  7 co        2020-12-31      35.8      0.649</span></span>
+<span><span class="co">#&gt;  8 ct        2020-12-31      52.1      0.819</span></span>
+<span><span class="co">#&gt;  9 dc        2020-12-31      31.0      0.601</span></span>
+<span><span class="co">#&gt; 10 de        2020-12-31      65.2      0.807</span></span>
+<span><span class="co">#&gt; # ℹ 20,486 more rows</span></span></code></pre></div>
+<p>To create and train a simple auto-regressive forecaster to predict the death rate two weeks into the future using past (lagged) deaths and cases, we could use the following function.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">two_week_ahead</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://cmu-delphi.github.io/epipredict/reference/arx_forecaster.html">arx_forecaster</a></span><span class="op">(</span></span>
+<span>  <span class="va">jhu</span>, </span>
+<span>  outcome <span class="op">=</span> <span class="st">"death_rate"</span>, </span>
+<span>  predictors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"case_rate"</span>, <span class="st">"death_rate"</span><span class="op">)</span>,</span>
+<span>  args_list <span class="op">=</span> <span class="fu"><a href="https://cmu-delphi.github.io/epipredict/reference/arx_args_list.html">arx_args_list</a></span><span class="op">(</span></span>
+<span>    lags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">7</span>, <span class="fl">14</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">7</span>, <span class="fl">14</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    ahead <span class="op">=</span> <span class="fl">14</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span> </span></code></pre></div>
+<p>In this case, we have used a number of different lags for the case rate, while only using 3 weekly lags for the death rate (as predictors). The result is both a fitted model object which could be used any time in the future to create different forecasts, as well as a set of predicted values (and prediction intervals) for each location 14 days after the last available time value in the data.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">two_week_ahead</span><span class="op">$</span><span class="va">epi_workflow</span></span>
+<span><span class="co">#&gt; ══ Epi Workflow [trained] ══════════════════════════════════</span></span>
+<span><span class="co">#&gt; Preprocessor: Recipe</span></span>
+<span><span class="co">#&gt; Model: linear_reg()</span></span>
+<span><span class="co">#&gt; Postprocessor: Frosting</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Preprocessor ────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; 5 Recipe Steps</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; • step_epi_lag()</span></span>
+<span><span class="co">#&gt; • step_epi_lag()</span></span>
+<span><span class="co">#&gt; • step_epi_ahead()</span></span>
+<span><span class="co">#&gt; • step_naomit()</span></span>
+<span><span class="co">#&gt; • step_naomit()</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Model ───────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; stats::lm(formula = ..y ~ ., data = data)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;       (Intercept)    lag_0_case_rate    lag_1_case_rate  </span></span>
+<span><span class="co">#&gt;        -0.0073358          0.0030365          0.0012467  </span></span>
+<span><span class="co">#&gt;   lag_2_case_rate    lag_3_case_rate    lag_7_case_rate  </span></span>
+<span><span class="co">#&gt;         0.0009536          0.0011425          0.0012481  </span></span>
+<span><span class="co">#&gt;  lag_14_case_rate   lag_0_death_rate   lag_7_death_rate  </span></span>
+<span><span class="co">#&gt;         0.0003041          0.1351769          0.1471127  </span></span>
+<span><span class="co">#&gt; lag_14_death_rate  </span></span>
+<span><span class="co">#&gt;         0.1062473  </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Postprocessor ───────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; 5 Frosting Layers</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; • layer_predict()</span></span>
+<span><span class="co">#&gt; • layer_residual_quantiles()</span></span>
+<span><span class="co">#&gt; • layer_add_forecast_date()</span></span>
+<span><span class="co">#&gt; • layer_add_target_date()</span></span>
+<span><span class="co">#&gt; • layer_threshold()</span></span></code></pre></div>
+<p>The fitted model here involved preprocessing the data to appropriately generate lagged predictors, estimating a linear model with <code><a href="https://rdrr.io/r/stats/lm.html">stats::lm()</a></code> and then postprocessing the results to be meaningful for epidemiological tasks. We can also examine the predictions.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">two_week_ahead</span><span class="op">$</span><span class="va">predictions</span></span>
+<span><span class="co">#&gt; An `epi_df` object, 56 x 6 with metadata:</span></span>
+<span><span class="co">#&gt; * geo_type  = state</span></span>
+<span><span class="co">#&gt; * time_type = day</span></span>
+<span><span class="co">#&gt; * as_of     = 2022-05-31 12:08:25</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; # A tibble: 56 × 6</span></span>
+<span><span class="co">#&gt;    geo_value time_value .pred         .pred_distn</span></span>
+<span><span class="co">#&gt;  * &lt;chr&gt;     &lt;date&gt;     &lt;dbl&gt;              &lt;dist&gt;</span></span>
+<span><span class="co">#&gt;  1 ak        2021-12-31 0.449 [0.05, 0.95]&lt;q-rng&gt;</span></span>
+<span><span class="co">#&gt;  2 al        2021-12-31 0.574 [0.05, 0.95]&lt;q-rng&gt;</span></span>
+<span><span class="co">#&gt;  3 ar        2021-12-31 0.673 [0.05, 0.95]&lt;q-rng&gt;</span></span>
+<span><span class="co">#&gt;  4 as        2021-12-31 0     [0.05, 0.95]&lt;q-rng&gt;</span></span>
+<span><span class="co">#&gt;  5 az        2021-12-31 0.679 [0.05, 0.95]&lt;q-rng&gt;</span></span>
+<span><span class="co">#&gt;  6 ca        2021-12-31 0.575 [0.05, 0.95]&lt;q-rng&gt;</span></span>
+<span><span class="co">#&gt;  7 co        2021-12-31 0.862 [0.05, 0.95]&lt;q-rng&gt;</span></span>
+<span><span class="co">#&gt;  8 ct        2021-12-31 1.07  [0.05, 0.95]&lt;q-rng&gt;</span></span>
+<span><span class="co">#&gt;  9 dc        2021-12-31 2.12  [0.05, 0.95]&lt;q-rng&gt;</span></span>
+<span><span class="co">#&gt; 10 de        2021-12-31 1.09  [0.05, 0.95]&lt;q-rng&gt;</span></span>
+<span><span class="co">#&gt; # ℹ 46 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 2 more variables: forecast_date &lt;date&gt;,</span></span>
+<span><span class="co">#&gt; #   target_date &lt;date&gt;</span></span></code></pre></div>
+<p>The results above show a distributional forecast produced using data through the end of 2021 for the 14th of January 2022. A prediction for the death rate per 100K inhabitants is available for every state (<code>geo_value</code>) along with a 90% predictive interval. The figure below
+displays the forecast for a small handful of states. The vertical black line is the forecast date. The forecast doesn’t appear to be particularly good, but our choices above were intended to be illustrative of the functionality rather than optimized for accuracy.</p>
+<div class="inline-figure"><img src="index_files/figure-html/unnamed-chunk-1-1.png" width="90%" style="display: block; margin: auto;"></div>
+</div>
+<div id="contents" class="section level2" number="1.5">
+<h2>
+<span class="header-section-number">1.5</span> Contents<a class="anchor" aria-label="anchor" href="#contents"><i class="fas fa-link"></i></a>
+</h2>
+<p>The remainder of this book examines this software in more detail, illustrating some of the flexibility that is available.</p>
 
 </div>
 </div>
+
   <div class="chapter-nav">
 <div class="empty"></div>
 <div class="next"><a href="demonstrations-of-sliding-ar-and-arx-forecasters.html"><span class="header-section-number">2</span> Demonstrations of sliding AR and ARX forecasters</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#about"><span class="header-section-number">1</span> About</a></li>
-<li><a class="nav-link" href="#usage"><span class="header-section-number">1.1</span> Usage</a></li>
-<li><a class="nav-link" href="#render-book"><span class="header-section-number">1.2</span> Render book</a></li>
-<li><a class="nav-link" href="#preview-book"><span class="header-section-number">1.3</span> Preview book</a></li>
+<li><a class="nav-link" href="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="nav-link" href="#installation"><span class="header-section-number">1.1</span> Installation</a></li>
+<li><a class="nav-link" href="#documentation"><span class="header-section-number">1.2</span> Documentation</a></li>
+<li><a class="nav-link" href="#goals-for-epipredict"><span class="header-section-number">1.3</span> Goals for epipredict</a></li>
+<li><a class="nav-link" href="#intermediate-example"><span class="header-section-number">1.4</span> Intermediate example</a></li>
+<li><a class="nav-link" href="#contents"><span class="header-section-number">1.5</span> Contents</a></li>
 </ul>
 
       <div class="book-extra">
@@ -121,7 +256,7 @@ R packages.&lt;/p&gt;">
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Vignette on Delphi Tooling for CDPH</strong>" was written by Logan Brooks, Daniel J. McDonald, and Ryan J. Tibshirani. It was last built on 2023-04-08.</p>
+    <p>"<strong>Vignette on Delphi Tooling for CDPH</strong>" was written by Logan C. Brooks, Daniel J. McDonald, and Ryan J. Tibshirani. It was last built on 2023-04-10.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

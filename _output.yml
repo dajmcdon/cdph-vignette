@@ -2,5 +2,4 @@ bookdown::bs4_book:
   css: style.css
   theme:
     primary: "#C41230"
-  repo: https://github.com/dajmcdon/cdph-vignette
   cache: true

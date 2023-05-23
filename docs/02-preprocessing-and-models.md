@@ -154,7 +154,8 @@ r <- epi_recipe(counts_subset) %>%
   step_mutate(cases = pmax(cases, 0), deaths = pmax(deaths, 0)) %>%  
   step_epi_lag(cases, deaths, lag = c(0, 7)) %>%
   step_epi_ahead(deaths, ahead = 7, role = "outcome") %>%
-  step_epi_naomit()
+  step_epi_naomit() %>%
+  {.}
 ```
 
 After specifying the preprocessing steps, we will use the `parsnip` package for
@@ -165,6 +166,8 @@ latest available date in the dataset.
 ```r
 latest <- get_test_data(r, counts_subset)
 
+f <- frosting()
+
 wf <- epi_workflow(r, parsnip::poisson_reg()) %>%
   fit(counts_subset)
 
@@ -172,7 +175,7 @@ predict(wf, latest) %>% filter(!is.na(.pred))
 #> An `epi_df` object, 5 x 3 with metadata:
 #> * geo_type  = state
 #> * time_type = day
-#> * as_of     = 2023-04-04 16:26:23
+#> * as_of     = 2023-04-07 15:38:39
 #> 
 #> # A tibble: 5 × 3
 #>   geo_value time_value .pred

@@ -1,15 +1,16 @@
-Package: cdphvignette
-Title: Large vignette for CDPH
+Package: epipredict.megavignette
+Title: epipredict megavignette
 Version: 0.0.0.9999
 Authors@R: c(
     person("Logan", "Brooks", role = c("cre","aut"),
     person("Daniel", "McDonald", role = "aut"),
     person("Ryan", "Tibshirani", , "ryantibs@cmu.edu", role = "aut"))
-Description: Bookdown vignette for CDPH
+Description: Bookdown vignette on epipredict
 License: CC BY 4.0
 Imports:
     bookdown,
     covidcast,
+    downlit,
     epidatr,
     epipredict,
     epiprocess,

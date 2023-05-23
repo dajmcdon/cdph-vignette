@@ -151,7 +151,8 @@ r <- epi_recipe(counts_subset) %>%
   step_mutate(cases = pmax(cases, 0), deaths = pmax(deaths, 0)) %>%  
   step_epi_lag(cases, deaths, lag = c(0, 7)) %>%
   step_epi_ahead(deaths, ahead = 7, role = "outcome") %>%
-  step_epi_naomit()
+  step_epi_naomit() %>%
+  {.}
 ```
 
 After specifying the preprocessing steps, we will use the `parsnip` package for
@@ -160,6 +161,8 @@ latest available date in the dataset.
 
 ```{r}
 latest <- get_test_data(r, counts_subset)
+
+f <- frosting()
 
 wf <- epi_workflow(r, parsnip::poisson_reg()) %>%
   fit(counts_subset)

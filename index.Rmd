@@ -1,5 +1,5 @@
 --- 
-title: "Vignette on Delphi Tooling for CDPH"
+title: "Forecasting using `{epipredict}` + `{epiprocess}`"
 author: "Logan C. Brooks, Daniel J. McDonald, and Ryan J. Tibshirani"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
